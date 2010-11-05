@@ -12,7 +12,6 @@ class AkismetExtension extends Extension
         $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
         $loader->load('config.xml');
 
-        $container->getDefinition('akismet')->addArgument($config['username']);
         $container->getDefinition('akismet')->addArgument($config['key']);
     }
 

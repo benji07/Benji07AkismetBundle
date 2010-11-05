@@ -8,7 +8,6 @@ Bundle to use akismet api in Symfony2
     [yml]
     akismet.config:
       key: ~
-      username: ~
       
       
 ## Usage
@@ -19,7 +18,7 @@ Bundle to use akismet api in Symfony2
     $this['akismet']->isSpam($comment);
     
     // submit a spam
-    $this['akismet']->reportAsSpam($comment);
+    $this['akismet']->submitSpam($comment);
     
     // submit a ham
-    $this['akismet']->notASpam($comment);
+    $this['akismet']->submitHam($comment);
