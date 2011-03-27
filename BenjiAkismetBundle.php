@@ -1,6 +1,6 @@
 <?php
 
-namespace Benji\AkismetBundle;
+namespace Benji\Bundle\AkismetBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

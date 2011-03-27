@@ -1,6 +1,6 @@
 <?php
 
-namespace Benji\AkismetBundle\DependencyInjection;
+namespace Benji\Bundle\AkismetBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
