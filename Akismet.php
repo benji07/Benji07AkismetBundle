@@ -1,6 +1,6 @@
 <?php
 
-namespace Benji\Bundle\AkismetBundle;
+namespace Benji07\Bundle\AkismetBundle;
 
 /**
  * Akismet class

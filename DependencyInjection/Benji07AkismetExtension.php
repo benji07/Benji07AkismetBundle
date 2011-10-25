@@ -1,6 +1,6 @@
 <?php
 
-namespace Benji\Bundle\AkismetBundle\DependencyInjection;
+namespace Benji07\Bundle\AkismetBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -9,10 +9,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 use Symfony\Component\Config\Definition\Processor;
 
-class BenjiAkismetExtension extends Extension
+class Benji07AkismetExtension extends Extension
 {
     /**
-     * Handles the benji_akismet configuration.
+     * Handles the benji07_akismet configuration.
      *
      * @param array $configs The configurations being loaded
      * @param ContainerBuilder $container
@@ -48,7 +48,7 @@ class BenjiAkismetExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'http://symfony.com/schema/dic/benji-akismet';
+        return 'http://symfony.com/schema/dic/benji07-akismet';
     }
 
     /**
@@ -56,6 +56,6 @@ class BenjiAkismetExtension extends Extension
      */
     public function getAlias()
     {
-        return 'benji_akismet';
+        return 'benji07_akismet';
     }
 }

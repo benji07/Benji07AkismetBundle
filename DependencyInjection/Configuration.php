@@ -1,6 +1,6 @@
 <?php
 
-namespace Benji\Bundle\AkismetBundle\DependencyInjection;
+namespace Benji07\Bundle\AkismetBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
@@ -19,7 +19,7 @@ class Configuration
     public function getConfigTree()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('benji_akismet', 'array');
+        $rootNode = $treeBuilder->root('benji07_akismet', 'array');
 
         $rootNode
             ->children()

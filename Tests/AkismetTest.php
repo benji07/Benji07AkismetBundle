@@ -1,8 +1,8 @@
 <?php
 
-namespace Benji\Bundle\AkismetBundle\Tests;
+namespace Benji07\Bundle\AkismetBundle\Tests;
 
-use Benji\Bundle\AkismetBundle\Akismet;
+use Benji07\Bundle\AkismetBundle\Akismet;
 
 class AkismetTest extends \PHPUnit_Framework_TestCase
 {

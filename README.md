@@ -1,4 +1,4 @@
-#BenjiAkismetBundle
+#Benji07AkismetBundle
 
 Bundle to use akismet api in Symfony2
 
