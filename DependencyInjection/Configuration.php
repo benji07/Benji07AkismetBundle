@@ -25,8 +25,7 @@ class Configuration
             ->children()
                 ->scalarNode('key')->end()
                 ->scalarNode('blog')->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder->buildTree();
     }

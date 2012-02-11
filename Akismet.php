@@ -9,53 +9,76 @@ namespace Benji07\Bundle\AkismetBundle;
  */
 class Akismet
 {
-    protected $user_agent = 'Symfony2 | Akismet 1.11';
+    protected $userAgent = 'Symfony2 | Akismet 1.11';
 
     protected $key = null;
 
     protected $blog = null;
 
+    /**
+     * __construct
+     *
+     * @param string $url the url of your website
+     * @param string $key the api key
+     */
     public function __construct($url, $key)
     {
         $this->key = $key;
         $this->blog = $url;
     }
 
+    /**
+     * Check if the params is a spam
+     *
+     * @param array $params params
+     *
+     * @return boolean
+     */
     public function isSpam(array $params = array())
     {
         $this->checkRequirements($params);
 
         $response = $this->post($this->key.'.rest.akismet.com', '/1.1/comment-check', $params);
 
-        if($response == 'invalid') {
+        if ($response == 'invalid') {
             throw new \Exception('Invalid API Key');
         }
 
-        if($response == 'true') {
+        if ($response == 'true') {
             return true;
         }
 
         return false;
     }
 
+    /**
+     * Submit a comment as spam
+     *
+     * @param array $params params
+     */
     public function submitSpam(array $params = array())
     {
         $this->checkRequirements($params);
 
-        $response = $this->post($this->key.'.rest.akismet.com','/1.1/submit-spam', $params);
+        $response = $this->post($this->key.'.rest.akismet.com', '/1.1/submit-spam', $params);
 
-        if($response === 'invalid') {
+        if ($response === 'invalid') {
             throw new \Exception('Invalid API Key');
         }
     }
 
+    /**
+     * Submit a comment as Ham
+     *
+     * @param array $params params
+     */
     public function submitHam(array $params = array())
     {
         $this->checkRequirements($params);
 
-        $response = $this->post($this->key.'.rest.akismet.com','/1.1/submit-ham', $params);
+        $response = $this->post($this->key.'.rest.akismet.com', '/1.1/submit-ham', $params);
 
-        if($response === 'invalid') {
+        if ($response === 'invalid') {
             throw new \Exception('Invalid API Key');
         }
     }
@@ -63,8 +86,9 @@ class Akismet
     /**
      * Verify an api key
      *
-     * @param string $key
-     * @param string $blog
+     * @param string $key  your api key
+     * @param string $blog your website url
+     *
      * @return boolean
      */
     public function verifyKey($key = null, $blog = null)
@@ -77,6 +101,11 @@ class Akismet
         return $response === 'valid';
     }
 
+    /**
+     * Checkf if params contains required data
+     *
+     * @param array $params params
+     */
     protected function checkRequirements(array $params = array())
     {
         if (empty($params['user_ip']) || empty($params['user_agent'])) {
@@ -84,13 +113,22 @@ class Akismet
         }
     }
 
+    /**
+     * Send a request to Akismet server
+     *
+     * @param string $host   the hostname
+     * @param string $path   the path
+     * @param array  $params the data to send
+     *
+     * @return string
+     */
     protected function post($host, $path, array $params = array())
     {
-        if(!isset($params['key']) || empty($params['key'])) {
+        if (!isset($params['key']) || empty($params['key'])) {
             $params['key'] = $this->key;
         }
 
-        if(!isset($prams['blog']) || empt($params['blog'])) {
+        if (!isset($prams['blog']) || empt($params['blog'])) {
             $params['blog'] = $this->blog;
         }
 
@@ -101,7 +139,7 @@ class Akismet
             'Host: '.$host,
             'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
             'Content-Length: '.\strlen($content),
-            'User-Agent: '.$this->user_agent,
+            'User-Agent: '.$this->userAgent,
             '',
             $content
         );
@@ -110,16 +148,16 @@ class Akismet
 
         $response = '';
 
-        if($conn != null) {
-            \fwrite($conn, implode("\r\n",$request));
+        if ($conn != null) {
+            \fwrite($conn, implode("\r\n", $request));
 
-            while(!\feof($conn)) {
+            while (!\feof($conn)) {
                 $response .= \fgets($conn, 1160);
             }
 
             \fclose($conn);
 
-            list($header, $response) = explode("\r\n\r\n",$response);
+            list($header, $response) = explode("\r\n\r\n", $response);
         }
 
         return \trim($response);

@@ -9,13 +9,16 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 use Symfony\Component\Config\Definition\Processor;
 
+/**
+ * Benji07 AkismetBundle Extension
+ */
 class Benji07AkismetExtension extends Extension
 {
     /**
      * Handles the benji07_akismet configuration.
      *
-     * @param array $configs The configurations being loaded
-     * @param ContainerBuilder $container
+     * @param array            $configs   The configurations being loaded
+     * @param ContainerBuilder $container The container
      */
     public function load(array $configs , ContainerBuilder $container)
     {
@@ -27,32 +30,16 @@ class Benji07AkismetExtension extends Extension
 
         $config = $processor->process($c->getConfigTree(), $configs);
 
-        $container->setParameter('akismet.blog',$config['blog']);
-        $container->setParameter('akismet.key',$config['key']);
+        $container->setParameter('akismet.blog', $config['blog']);
+        $container->setParameter('akismet.key', $config['key']);
 
         $loader->load('config.xml');
     }
 
     /**
-     * Returns the base path for the XSD files.
+     * @see Symfony\Component\DependencyInjection\Extension\ExtensionInterface
      *
-     * @return string The XSD base path
-     */
-    public function getXsdValidationBasePath()
-    {
-        return null;
-    }
-
-    /**
-     * @see Symfony\Component\DependencyInjection\Extension\ExtensionInterface
-     */
-    public function getNamespace()
-    {
-        return 'http://symfony.com/schema/dic/benji07-akismet';
-    }
-
-    /**
-     * @see Symfony\Component\DependencyInjection\Extension\ExtensionInterface
+     * @return string
      */
     public function getAlias()
     {

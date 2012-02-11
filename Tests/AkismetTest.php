@@ -6,23 +6,31 @@ use Benji07\Bundle\AkismetBundle\Akismet;
 
 require_once __DIR__.'/../Akismet.php';
 
+/**
+ * Akismet Test
+ */
 class AkismetTest extends \PHPUnit_Framework_TestCase
 {
     protected $akismet = null;
 
+    /**
+     * Setup Akimset
+     */
     protected function setUp()
     {
         $this->akismet = new Akismet('http://benjamin.leveque.me', 'c7f92a636eac');
     }
 
-
+    /**
+     * Test Verify Key
+     */
     public function testVerifyKey()
     {
         $return = $this->akismet->verifyKey("c7f92a636eac", 'http://benjamin.leveque.me');
 
         $this->assertEquals(true, $return, 'Valid API key, must return true');
 
-        $return = $this->akismet->verifyKey("a636ead",'toto');
+        $return = $this->akismet->verifyKey("a636ead", 'toto');
 
         $this->assertEquals(false, $return, 'Invalid API key, must return false');
 
@@ -31,21 +39,22 @@ class AkismetTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(true, $return, 'Default API key, must return true');
     }
 
+    /**
+     * Test isSpam
+     */
     public function testIsSpam()
     {
         try {
             $this->akismet->isSpam();
             $this->fail('isSpam must throw an exception when user_ip and user_agent are missing');
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertTrue(true, 'isSpam must throw an exception when user_ip and user_agent are missing');
         }
 
         try {
             $this->akismet->isSpam(array('user_agent' => 'Toto', 'user_ip' => '127.0.0.1'));
-            $this->assertTrue(true,'isSpam must not throw an exception when user_ip and user_agent are missing');
-        }
-        catch(\Exception $e) {
+            $this->assertTrue(true, 'isSpam must not throw an exception when user_ip and user_agent are missing');
+        } catch (\Exception $e) {
             $this->fail('isSpam must not throw an exception when user_ip and user_agent are missing');
         }
 
@@ -53,9 +62,8 @@ class AkismetTest extends \PHPUnit_Framework_TestCase
             $akismet = new Akismet('http://benjamin.leveque.me', 'invalid');
             $akismet->isSpam(array('user_agent' => 'Toto', 'user_ip' => '127.0.0.1'));
             $this->fail('isSpam must throw an exception key is invalid');
-        }
-        catch(\Exception $e) {
-            $this->assertTrue(true,'isSpam must throw an exception key is invalid');
+        } catch (\Exception $e) {
+            $this->assertTrue(true, 'isSpam must throw an exception key is invalid');
         }
 
         $spam = array(
@@ -68,7 +76,7 @@ class AkismetTest extends \PHPUnit_Framework_TestCase
             'comment_content' => 'im a bad spam'
         );
 
-        $not_spam = array(
+        $notSpam = array(
             'user_ip' => '82.33.8.5.160',
             'user_agent' => 'Firefox',
             'referrer' => 'http://benjamin.leveque.me',
@@ -80,45 +88,47 @@ class AkismetTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->akismet->isSpam($spam));
 
-        $this->assertFalse($this->akismet->isSpam($not_spam));
+        $this->assertFalse($this->akismet->isSpam($notSpam));
     }
 
+    /**
+     * Test submitSpam
+     */
     public function testSubmitSpam()
     {
         try {
             $akismet = new Akismet('http://benjamin.leveque.me', 'invalid');
             $akismet->submitSpam(array('user_agent' => 'Toto', 'user_ip' => '127.0.0.1'));
             $this->fail('submitSpam must throw an exception key is invalid');
-        }
-        catch(\Exception $e) {
-            $this->assertTrue(true,'submitSpam must throw an exception key is invalid');
+        } catch (\Exception $e) {
+            $this->assertTrue(true, 'submitSpam must throw an exception key is invalid');
         }
 
         try {
             $this->akismet->submitSpam(array('user_agent' => 'Toto', 'user_ip' => '127.0.0.1'));
-            $this->assertTrue(true,'submitSpam must throw an exception key is invalid');
-        }
-        catch(\Exception $e) {
+            $this->assertTrue(true, 'submitSpam must throw an exception key is invalid');
+        } catch (\Exception $e) {
             $this->fail('submitSpam must throw an exception key is invalid');
         }
     }
 
+    /**
+     * Test submitHam
+     */
     public function testSubmitHam()
     {
         try {
             $akismet = new Akismet('http://benjamin.leveque.me', 'invalid');
             $akismet->submitHam(array('user_agent' => 'Toto', 'user_ip' => '127.0.0.1'));
             $this->fail('submitHam must throw an exception key is invalid');
-        }
-        catch(\Exception $e) {
-            $this->assertTrue(true,'submitHam must throw an exception key is invalid');
+        } catch (\Exception $e) {
+            $this->assertTrue(true, 'submitHam must throw an exception key is invalid');
         }
 
         try {
             $this->akismet->submitHam(array('user_agent' => 'Toto', 'user_ip' => '127.0.0.1'));
-            $this->assertTrue(true,'submitHam must throw an exception key is invalid');
-        }
-        catch(\Exception $e) {
+            $this->assertTrue(true, 'submitHam must throw an exception key is invalid');
+        } catch (\Exception $e) {
             $this->fail('submitHam must throw an exception key is invalid');
         }
     }
