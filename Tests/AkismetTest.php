@@ -4,6 +4,8 @@ namespace Benji07\Bundle\AkismetBundle\Tests;
 
 use Benji07\Bundle\AkismetBundle\Akismet;
 
+require_once __DIR__.'/../Akismet.php';
+
 class AkismetTest extends \PHPUnit_Framework_TestCase
 {
     protected $akismet = null;
